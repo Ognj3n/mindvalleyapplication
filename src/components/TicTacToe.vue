@@ -46,8 +46,8 @@ table tr td:last-child {
     </select>
     <h3>{{title}}</h3>
 <table id="board">
-    <tr v-for="n in selected" >
-      <td v-for="m in selected" @click="react" :data-position="8"></td>
+    <tr v-for="n in selected" :data-position="n">
+      <td v-for="m in selected" @click="react" :data-position="m"></td>
     </tr>
   </tbody>
 </table>
@@ -67,8 +67,8 @@ export default {
         {type:'5x5',num:5}
       ],
       players: [
-        {playerType:'X',moves:['x']},
-        {playerType:'O',moves:['y']}
+        {playerType:'X',moves:[]},
+        {playerType:'O',moves:[]}
       ],
       helper:false,
       playsFirst: 'user'
@@ -76,13 +76,13 @@ export default {
   },
   methods:{
     react: function(e){
+      //meaning field is already played
+      if(this.players[0].moves.includes(e.target) || this.players[1].moves.includes(e.target))
+      return false;
       var player = this.helper ? 1 : 0;
-      var nodes = Array.prototype.slice.call( e.path[2] );
-      console.log(nodes);
-      //console.log(nodes.indexOf( e.path[1] ));
+      this.players[player].moves.push(e.target);
       this.helper = !this.helper;
       e.target.className = this.players[player].playerType;
-      console.log(this.players[player].moves);
     },
     clear: function(){
       var selectedTds = document.getElementsByTagName("td");
@@ -90,7 +90,8 @@ export default {
         selectedTds[o].className='';
       }
       this.helper = false;
-      this.moves = [];
+      for(var u = 0;u<2;u++)
+      this.players[u].moves = [];
     }
   }
 }
