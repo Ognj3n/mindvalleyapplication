@@ -97,6 +97,8 @@ export default {
     },
     generateWinningStream: function(){
       var numOfWinningCombinations = 0;
+      var cnt = 0;
+      var helperArray = [];
       for(var o = 0;o<=this.boardSize.length;o++){
         for(var property in this.boardSize[o]){
           if(property == 'num')
@@ -125,20 +127,28 @@ export default {
           break;
           case (t <= (this.selected+1)):
           for(var k = 0; k<this.selected;k++){
-            //console.log(document.getElementsByTagName('tr')[k].childNodes);
-            for(var i = 0; i<document.getElementsByTagName('tr')[k].childNodes.length;i++){
-              //console.log(document.getElementsByTagName('tr')[k].childNodes[i]);
-              //console.log(document.getElementsByTagName('tr')[i].childNodes.length);
-              //this.winningStream[t][k]=document.getElementsByTagName('tr')[k].childNodes[i];
-            }
+              this.winningStream[t][k]=document.getElementsByTagName('tr')[t-2].childNodes[k];
           }
           break;
           default:
-          console.log('called'+t);
-          console.log(this.selected+1);
+
+
+
+            for(var n = 0; n<this.selected;n++){
+              console.log(document.getElementsByTagName('tr')[cnt].childNodes[n]);
+              helperArray.push(document.getElementsByTagName('tr')[cnt].childNodes[n])
+              //break;
+            }
+            cnt++;
           break;
         }
 
+      }
+      console.log(helperArray);
+      var w= numOfWinningCombinations-this.selected;
+      for(var p=0;p<this.selected;p++){
+        this.winningStream[w]
+        w++;
       }
       console.log(this.winningStream);
     }
