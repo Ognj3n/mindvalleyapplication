@@ -132,24 +132,18 @@ export default {
           break;
           default:
 
-
-
-            for(var n = 0; n<this.selected;n++){
-              console.log(document.getElementsByTagName('tr')[cnt].childNodes[n]);
-              helperArray.push(document.getElementsByTagName('tr')[cnt].childNodes[n])
-              //break;
+          var tab = document.getElementById("board");
+          for (row = 0; row < 3; ++row) {
+          if (tab.rows[row].cells.length > cnt) {
+                      this.winningStream[t].push(tab.rows[row].cells[cnt]);
             }
-            cnt++;
+          }
+          cnt++;
           break;
         }
 
       }
-      console.log(helperArray);
-      var w= numOfWinningCombinations-this.selected;
-      for(var p=0;p<this.selected;p++){
-        this.winningStream[w]
-        w++;
-      }
+
       console.log(this.winningStream);
     }
   },
