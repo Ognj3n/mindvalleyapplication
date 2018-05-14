@@ -71,7 +71,8 @@ export default {
         {playerType:'O',moves:[]}
       ],
       helper:false,
-      playsFirst: 'user'
+      playsFirst: 'user',
+      winningStream:{}
     }
   },
   methods:{
@@ -92,7 +93,46 @@ export default {
       this.helper = false;
       for(var u = 0;u<2;u++)
       this.players[u].moves = [];
+    },
+    generateWinningStream: function(){
+      for(var t = 0; t<this.selected;t++){
+        switch(t){
+          case 0:
+          this.winningStream[t]=[];
+          for(var k = 0; k<this.selected;k++){
+            this.winningStream[t][k]=document.getElementsByTagName('tr')[k].childNodes[k];
+          }
+
+          break;
+          case 1:
+          this.winningStream[t]=[];
+          var j = 2;
+          loop:
+          for(var k = 0; k<this.selected;k++){
+            while(j>=0){
+              console.log(j);
+              this.winningStream[t][k]=document.getElementsByTagName('tr')[k].childNodes[j];
+              j--;
+              continue loop;
+            }
+          }
+          break;
+
+          default:
+          for(var k = 0; k<this.selected;k++){
+            for(var i = 0; i<document.getElementsByTagName('tr')[i].childNodes.length;i++){
+              this.winningStream[t][k]=document.getElementsByTagName('tr')[k].childNodes[i];
+            }
+          }
+          break;
+        }
+
+      }
+      console.log(this.winningStream);
     }
-  }
+  },
+  mounted:function(){
+        this.generateWinningStream();
+  },
 }
 </script>
