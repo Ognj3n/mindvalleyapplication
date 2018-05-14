@@ -62,9 +62,9 @@ export default {
       selected:3,
       choseType:true,
       boardSize: [
-        {type:'3x3',num:3},
-        {type:'4x4',num:4},
-        {type:'5x5',num:5}
+        {type:'3x3',num:3,solutions:8},
+        {type:'4x4',num:4,solutions:10},
+        {type:'5x5',num:5,solutions:12}
       ],
       players: [
         {playerType:'X',moves:[]},
@@ -93,37 +93,49 @@ export default {
       this.helper = false;
       for(var u = 0;u<2;u++)
       this.players[u].moves = [];
+      this.generateWinningStream();
     },
     generateWinningStream: function(){
-      for(var t = 0; t<this.selected;t++){
-        switch(t){
-          case 0:
-          this.winningStream[t]=[];
+      var numOfWinningCombinations = 0;
+      for(var o = 0;o<=this.boardSize.length;o++){
+        for(var property in this.boardSize[o]){
+          if(property == 'num')
+          if(this.boardSize[o].num==this.selected)
+          numOfWinningCombinations = this.boardSize[o].solutions;
+        }
+      }
+        for(var t = 0; t<numOfWinningCombinations;t++){
+        this.winningStream[t]=[];
+        switch(true){
+          case (t == 0):
           for(var k = 0; k<this.selected;k++){
             this.winningStream[t][k]=document.getElementsByTagName('tr')[k].childNodes[k];
           }
-
           break;
-          case 1:
-          this.winningStream[t]=[];
+          case (t == 1):
           var j = 2;
           loop:
           for(var k = 0; k<this.selected;k++){
             while(j>=0){
-              console.log(j);
               this.winningStream[t][k]=document.getElementsByTagName('tr')[k].childNodes[j];
               j--;
               continue loop;
             }
           }
           break;
-
-          default:
+          case (t <= (this.selected+1)):
           for(var k = 0; k<this.selected;k++){
-            for(var i = 0; i<document.getElementsByTagName('tr')[i].childNodes.length;i++){
-              this.winningStream[t][k]=document.getElementsByTagName('tr')[k].childNodes[i];
+            //console.log(document.getElementsByTagName('tr')[k].childNodes);
+            for(var i = 0; i<document.getElementsByTagName('tr')[k].childNodes.length;i++){
+              //console.log(document.getElementsByTagName('tr')[k].childNodes[i]);
+              //console.log(document.getElementsByTagName('tr')[i].childNodes.length);
+              //this.winningStream[t][k]=document.getElementsByTagName('tr')[k].childNodes[i];
             }
           }
+          break;
+          default:
+          console.log('called'+t);
+          console.log(this.selected+1);
           break;
         }
 
