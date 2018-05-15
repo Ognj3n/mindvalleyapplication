@@ -71,7 +71,7 @@ export default {
         {playerType:'O',moves:[]}
       ],
       helper:false,
-      playsFirst: 'user',
+      playsFirst: null,
       winningStream:{}
     }
   },
@@ -80,6 +80,7 @@ export default {
       //meaning field is already played
       if(this.players[0].moves.includes(e.target) || this.players[1].moves.includes(e.target))
       return false;
+
       var player = this.helper ? 1 : 0;
       this.players[player].moves.push(e.target);
       this.helper = !this.helper;
@@ -93,7 +94,7 @@ export default {
       this.helper = false;
       for(var u = 0;u<2;u++)
       this.players[u].moves = [];
-      this.generateWinningStream();
+      setTimeout(this.generateWinningStream, 50);
     },
     generateWinningStream: function(){
       var numOfWinningCombinations = 0;
@@ -110,12 +111,13 @@ export default {
         this.winningStream[t]=[];
         switch(true){
           case (t == 0):
+
           for(var k = 0; k<this.selected;k++){
             this.winningStream[t][k]=document.getElementsByTagName('tr')[k].childNodes[k];
           }
           break;
           case (t == 1):
-          var j = 2;
+          var j = this.selected-1;
           loop:
           for(var k = 0; k<this.selected;k++){
             while(j>=0){
@@ -132,19 +134,23 @@ export default {
           break;
           default:
 
-          var tab = document.getElementById("board");
-          for (row = 0; row < 3; ++row) {
-          if (tab.rows[row].cells.length > cnt) {
-                      this.winningStream[t].push(tab.rows[row].cells[cnt]);
+          var table = document.getElementById("board");
+          for (var row = 0; row < this.selected; ++row) {
+          if (table.rows[row].cells.length > cnt) {
+              this.winningStream[t].push(table.rows[row].cells[cnt]);
             }
           }
           cnt++;
           break;
         }
-
       }
+      //console.log(this.winningStream);
+    },
+    whoPlaysFirst: function(){
 
-      console.log(this.winningStream);
+    },
+    playMove: function(){
+
     }
   },
   mounted:function(){
