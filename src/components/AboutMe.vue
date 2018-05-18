@@ -1,351 +1,147 @@
 <style>
 
-table {
-  border-collapse: collapse;
-  margin: auto;
-  width: 40%;
-  table-layout: fixed;
-}
-
-td {
-  border: 6px solid #222;
-}
-
-td:after {
-  content: '';
-  display: block;
-  margin-top: 100%;
-}
-table tr:first-child td {
-  border-top: 0;
-}
-table tr td:first-child {
-  border-left: 0;
-}
-table tr:last-child td {
-  border-bottom: 0;
-}
-table tr td:last-child {
-  border-right: 0;
-}
-.X {
-  background-image: url('../assets/x.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-.O {
-  background-image: url('../assets/o.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-}
 </style>
 <template>
-  <div class="container">
-    <div v-if="!rolesBool">
-    <label>Board size:</label>
-    <select  v-model="selected" @change="clear">
-      <option v-for="type in boardSize" :value="type.num">{{type.type}}</option>
-    </select>
-  </div>
-    <button @click="clear" v-if="!rolesBool">Reset</button>
-    <div v-if="rolesBool">
-      <h5>Who plays first?</h5>
-      <div @click="whoPlaysFirst('leMe')">Le me</div>
-      <div @click="whoPlaysFirst('leScript')">Le script</div>
+  <div id="content" class="content">
+    <h1>{{this.msg}}</h1>
+    <h4>Original json:</h4><a :href=this.jsonUrl target="_blank">{{this.jsonUrl}}</a>
+    <hr>
+    <h1>Main Data</h1>
+    <hr>
+      <div id="main_data">
+        <img class="pull-left" :src="this.data.main_data.picture"></img><br>
+        <div><h5>Name:</h5>{{this.data.main_data.name}}<br></div>
+        <div><h5>Title:</h5>{{this.data.main_data.title}}<br></div>
+        <div><h5>Address:</h5>
+        <div v-for="(address_item,index) in this.data.main_data.address">
+          <span v-if="index == 'country'">{{address_item}}</span>
+          <span v-else>{{address_item}},</span>
+        </div>
+        </div>
+        <div><h5>Email Address:</h5>{{this.data.main_data.email_address}}<br></div>
+        <div><h5>Phone Number:</h5>{{this.data.main_data.phone_number}}<br></div>
+        <div><h5>Date of Birth:</h5>{{this.data.main_data.date_of_birth}}<br></div>
+        <div><h5>Place of Birth:</h5>{{this.data.main_data.place_of_birth}}<br></div>
+      </div>
+    <h1>Skills</h1>
+    <hr>
+    <div id="skills">
+
+      <ul v-for="(skill,index) in this.data.skills">
+        <li >{{skill.skill}}</li><!--v-if="index == skill.length - 1"-->
+        <!--div v-else>{{skill}}<br></div-->
+      </ul>
     </div>
-    <div v-if="!rolesBool">
-    <h3>{{title}}</h3>
-<table id="board">
-    <tr v-for="n in selected" :data-position="n">
-      <td v-for="m in selected" @click="react" :data-position="m"></td>
-    </tr>
-  </tbody>
-</table>
+    <h1>Employment History</h1>
+    <hr>
+    <div id="employment_history">
+
+      <div v-for="employment in this.data.employment_history">
+        <div><h5>Employment Type:</h5>{{employment.employment_type}}</div>
+        <div><h5>Company Name:</h5>{{employment.employer_name}}</div>
+        <div><h5>Period:</h5>{{employment.period}}</div>
+        <div><h5>Title:</h5>{{employment.title}}</div>
+        <div><h5>Location:</h5>{{employment.location}}</div>
+        <div>
+          <h5>
+        Duties:
+        </h5>
+        <ul v-for="duty in employment.duties">
+          <li>{{duty}}</li>
+        </ul>
+      </div>
+        <hr>
+      </div>
+    </div>
+    <h1>Education</h1>
+    <hr>
+    <div id="education">
+      <h3>Formal:</h3>
+      <hr>
+      <div v-for="(education,index) in this.data.education.formal">
+
+          <!--div v-for="(edTypeFormal,indexA) in edTypeFormalA"-->
+            <div><h5>Institution:</h5>{{education.institution}}</div>
+            <div><h5>Period:</h5>{{education.period}}</div>
+            <div><h5>Title:</h5>{{education.title}}</div>
+            <div><h5>About:</h5>{{education.about}}</div>
+            <hr>
+      </div>
+
+      <h3>Informal:</h3>
+      <hr>
+        <div v-for="(education,index) in this.data.education.infomal">
+
+          <!--div v-for="(edTypeInformal,indexA) in edTypeInformal"-->
+          <div><h5>Institution:</h5>{{education.institution}}</div>
+          <div><h5>Period:</h5>{{education.period}}</div>
+          <div><h5>Title:</h5>{{education.title}}</div>
+          <div><h5>About:</h5>{{education.about}}</div>
+          <hr>
+        <!--/div-->
+      </div>
+    </div>
+
+    <h3>Hobbies:</h3>
+    <hr>
+      <ul v-for="(hobbie,index) in this.data.hobbies">
+
+        <!--div v-for="(edTypeInformal,indexA) in edTypeInformal"-->
+        <li>{{hobbie.hobby}}</li>
+
+      </ul>
+      <hr>
+      <ul v-for="(link,index) in this.data.useful_links">
+
+        <!--div v-for="(edTypeInformal,indexA) in edTypeInformal"-->
+        <h5>{{link.name}}:</h5><li><a :href=link.link target="_blank">{{link.link}}</a></li>
+
+      </ul>
+      <hr>
+      <h4>To Mindvalley</h4>
+      <div>{{this.data.additional_to_mindvally.message}}</div>
+      <!--/div-->
+    </div>
   </div>
+
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  data (){
+  name: 'HelloWorld',
+  data () {
     return {
-      title: 'Tic Tac Toe',
-      selected:3,
-      choseType:true,
-      rolesBool:true,
-      boardSize: [
-        {type:'3x3',num:3,solutions:8},
-        {type:'4x4',num:4,solutions:10},
-        {type:'5x5',num:5,solutions:12}
-      ],
-      players: [
-        {playerType:'X',moves:[]},
-        {playerType:'O',moves:[]}
-      ],
-      helper:false,
-      winningStream:{},
-      numOfWinningCombinations:0,
-      playsFirst:null,
-      movesLeft: 9,
-      helperWinningStream: {}
+      msg: 'Welcome to Ognjen\'s CV',
+      data: {},
+      jsonUrl : "https://api.myjson.com/bins/uuhs2"
     }
-  },
-  methods:{
-    react: function(e){
+  },beforeMount:function(){
+    axios.get(this.jsonUrl)
+                        .then(response => {
+                             this.data = response.data;
 
-
-      //meaning field is already played
-      if(this.players[0].moves.includes(e.target) || this.players[1].moves.includes(e.target))
-      return false;
-      var target = e.target;
-      var player = this.helper ? 1 : 0;
-      this.players[player].moves.push(target);
-      this.helper = !this.helper;
-      target.className = this.players[player].playerType;
-
-      this.movesLeft--;
-      this.checkWinner();
-      if(this.helper==this.playsFirst)
-      this.playMove();
-
-
-      //if there are no moves left call check
-
-    },
-    clear: function(){
-      var selectedTds = document.getElementsByTagName("td");
-      for(var o = 0;o<selectedTds.length;o++){
-        selectedTds[o].className='';
-      }
-      this.helper = false;
-      for(var u = 0;u<2;u++)
-      this.players[u].moves = [];
-      this.rolesBool=true;
-      this.movesLeft = this.selected * this.selected;
-      //setTimeout(this.generateWinningStream, 50);
-    },
-    generateWinningStream: function(){
-      var cnt = 0;
-      var helperArray = [];
-      for(var o = 0;o<=this.boardSize.length;o++){
-        for(var property in this.boardSize[o]){
-          if(property == 'num')
-          if(this.boardSize[o].num==this.selected)
-          this.numOfWinningCombinations = this.boardSize[o].solutions;
-        }
-      }
-        for(var t = 0; t<this.numOfWinningCombinations;t++){
-        this.winningStream[t]=[];
-        this.helperWinningStream[t]=[];
-        switch(true){
-          case (t == 0):
-
-          for(var k = 0; k<this.selected;k++){
-            this.winningStream[t][k]=document.getElementsByTagName('tr')[k].childNodes[k];
-            this.helperWinningStream[t][k]=document.getElementsByTagName('tr')[k].childNodes[k];
-          }
-          break;
-          case (t == 1):
-          var j = this.selected-1;
-          loop:
-          for(var k = 0; k<this.selected;k++){
-            while(j>=0){
-              this.winningStream[t][k]=document.getElementsByTagName('tr')[k].childNodes[j];
-              this.helperWinningStream[t][k]=document.getElementsByTagName('tr')[k].childNodes[j];
-              j--;
-              continue loop;
-            }
-          }
-          break;
-          case (t <= (this.selected+1)):
-          for(var k = 0; k<this.selected;k++){
-              this.winningStream[t][k]=document.getElementsByTagName('tr')[t-2].childNodes[k];
-              this.helperWinningStream[t][k]=document.getElementsByTagName('tr')[t-2].childNodes[k];
-          }
-          break;
-          default:
-
-          var table = document.getElementById("board");
-          for (var row = 0; row < this.selected; ++row) {
-          if (table.rows[row].cells.length > cnt) {
-              this.winningStream[t].push(table.rows[row].cells[cnt]);
-              this.helperWinningStream[t].push(table.rows[row].cells[cnt]);
-            }
-          }
-          cnt++;
-          break;
-        }
-      }
-    },
-    whoPlaysFirst: function(playa){
-      this.rolesBool=false;
-      setTimeout(this.generateWinningStream, 50);
-
-      if(playa=='leScript'){
-        this.playsFirst= false;
-        return setTimeout(this.playMove, 70);
-      }
-      this.playsFirst= true;
-    },
-    playMove: function(){
-      var el = this.prepareTheMove();
-
-      if(typeof el=='object' && Object.keys(el).length==1){
-        el[0].click();
-      }
-
-      el.click();
-    },
-    prepareTheMove: function(){
-
-      var array = this.winningStream;
-      //console.log('array');
-      //console.log(array);
-      //check if it's first move for opponent
-      if(this.helper==this.playsFirst && document.getElementsByClassName("X").length==1 && this.selected!=4 && this.playsFirst==true){
-        //check if user played on diagonal fields and not the central element
-        if((array[0].includes(document.getElementsByClassName("X")[0]) || array[1].includes(document.getElementsByClassName("X")[0])) && (!(array[0].includes(document.getElementsByClassName("X")[0]) && array[1].includes(document.getElementsByClassName("X")[0]))))
-        {
-          return array[0].filter(function(n) {
-            return array[1].indexOf(n) > -1;
-          })[0];
-      }else if((array[0].includes(document.getElementsByClassName("X")[0]) && array[1].includes(document.getElementsByClassName("X")[0]))){
-
-         var first = Math.floor(Math.random()*2);
-         var second = array[first].splice(Math.round(this.selected/2)-1,1);
-         return array[first][Math.round(Math.random()*(array[first].length-1))];
-         //return array[first][0];
-      }
-      }
-
-      var moves = this.players[this.helper ? 1 : 0].moves;
-      var objectKeys = Object.keys(array);
-
-      //check if there is a winning move for the script
-
-      Array.prototype.diff = function(a) {
-        return this.filter(function(i) {return a.indexOf(i) < 0;});
-      };
-
-      for(var i = 0;i<Object.keys(this.helperWinningStream).length;i++){
-
-        if(typeof this.helperWinningStream[i] != 'undefined')
-        if(this.helperWinningStream[i].diff(moves).length==1){
-          //console.log(this.helperWinningStream[i]);
-          for(var g=0;g<this.helperWinningStream[i].length;g++){
-              if(this.helperWinningStream[i][g].classList.value==''){
-                return this.helperWinningStream[i][g];
-                console.log(this.helperWinningStream[i][g].classList.value);
-              }
-          }
-        }
-      }
-
-
-
-      //var scriptWin = [];
-
-      for(var i=0;i<moves.length;i++){
-        if(Object.keys(array).length)
-        for(var e=0;e<=objectKeys.length;e++){
-          //searching only for the possible winning combinations, meaning where only opponent's moves are present
-          if (typeof array[objectKeys[e]] != 'undefined'){
-            if(array[objectKeys[e]].includes(moves[i])){
-              //scriptWin.push(array[objectKeys[e]]);
-              delete array[objectKeys[e]];
-            }
-          }
-        }
-      }
-
-
-      var movesOpponent = this.players[!this.helper ? 1 : 0].moves;
-
-      for(var i=0;i<movesOpponent.length;i++){
-        //check if there are any opponent moves
-        if(Object.keys(array).length){
-          for(var e=0;e<=objectKeys.length;e++){
-            //searching only for the possible winning combinations, meaning where only opponent's moves are present
-            if (typeof array[objectKeys[e]] != 'undefined')
-            if(array[objectKeys[e]].includes(movesOpponent[i])){
-              array[objectKeys[e]].splice(array[objectKeys[e]].indexOf(movesOpponent[i]),1);
-            }
-          }
-        }else{
-          //last move when script plays first
-          return new Array(document.querySelector("td:not([class])"));
-        }
-      }
-
-
-      for(var i = 0;i<Object.keys(this.helperWinningStream).length;i++){
-
-        if(typeof this.helperWinningStream[i] != 'undefined')
-        if(this.helperWinningStream[i].diff(movesOpponent).length==1){
-          //console.log(this.helperWinningStream[i]);
-          for(var g=0;g<this.helperWinningStream[i].length;g++){
-              if(this.helperWinningStream[i][g].classList.value==''){
-                return this.helperWinningStream[i][g];
-                //console.log(this.helperWinningStream[i][g].classList.value);
-              }
-          }
-        }
-      }
-
-
-
-      objectKeys = Object.keys(array);
-
-      var sortable = [];
-      for (var key in array) {
-        sortable.push(array[key]);
-      }
-      //console.log(sortable);
-      sortable.sort(function(a, b) {
-        return a.length - b.length;
-      });
-
-      //console.log(sortable);
-
-
-      //check if all elements are the same, then play random
-      var length = sortable.length;
-      var check = sortable[0].length;
-      for(var i=0;i<length;i++) {
-        //if not all the moves are same return the most critical one
-        if(sortable[i].length!=check && length>1){
-          return sortable[0][Math.floor(Math.random()*sortable[0].length)]
-        }else if(length==1){
-          //returning the last non played field
-          return document.querySelector("td:not([class])");
-        }
-
-      }
-      //return random element
-      return sortable[Math.floor(Math.random()*length)][Math.floor(Math.random()*sortable[0].length)]
-      //console.log(sortable);
-    },
-    checkWinner: function(){
-
-        for(var e=0;e<Object.keys(this.helperWinningStream).length;e++){
-          var holdMoves = [];
-          var lengthO = this.helperWinningStream[e].length;
-          for(var g=0;g<lengthO;g++){
-            holdMoves.push(this.helperWinningStream[e][g].classList.value);
-          }
-          var first = holdMoves[0];
-          if(holdMoves.every(function(element) {
-            if(element=='' || element==null || element=='undefined')
-            return false;
-            return element === first;
-          })){
-            alert('winner is '+ first);
-            //this.clear();
-          }
-
-        }
-
-    }
+                        })
   }
 }
 </script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+h1, h2 {
+  font-weight: normal;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+</style>

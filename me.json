@@ -71,7 +71,7 @@
        "about":"That's when things started to become serious. I was meeting and exceeding projects scopes trying to develop the most optimized solutions to given tasks."
      },
      "2":{
-       "empoyment_type":"Fulltime employee",
+       "employment_type":"Fulltime employee",
        "employer_name":"OGOSense D.O.O",
        "period":"August 2017 – Present",
        "title":"PHP Developer",
@@ -127,7 +127,8 @@
          "title":"First level Wing-Chun Student",
          "about":"I trained Wing-Chun system of Chinese fighting for couple of years."
        }
-     },
+     }
+    },
      "hobbies":{
        "0":{
          "hobby":"Running"
@@ -146,6 +147,6 @@
        "message":"Huuh! First things first, You guys really made me sweat with these test tasks. :) Beside that, I would like to thank you for this opportunity. I really like everything that you do and your products. Hope I'll hear from you again."
      }
    }
-}
+
 
 "url":https://api.myjson.com/bins/14pmi2
