@@ -86,16 +86,14 @@ export default {
       winningStream:{},
       numOfWinningCombinations:0,
       playsFirst:null,
-      stop: false,
-      helperWinningStream: {},
-      safe:false
+      movesLeft: 9,
+      helperWinningStream: {}
     }
   },
   methods:{
     react: function(e){
-      //console.log(this.stop);
-      if(this.stop==true)
-      return false;
+
+
       //meaning field is already played
       if(this.players[0].moves.includes(e.target) || this.players[1].moves.includes(e.target))
       return false;
@@ -105,9 +103,7 @@ export default {
       this.helper = !this.helper;
       target.className = this.players[player].playerType;
 
-      if(this.players[this.helper ? 1 : 0].moves.length+this.players[!this.helper ? 1 : 0].moves.length == 4)
-      this.safe = true;
-
+      this.movesLeft--;
       this.checkWinner();
       if(this.helper==this.playsFirst)
       this.playMove();
@@ -125,8 +121,7 @@ export default {
       for(var u = 0;u<2;u++)
       this.players[u].moves = [];
       this.rolesBool=true;
-      this.stop = false;
-      this.safe = false;
+      this.movesLeft = this.selected * this.selected;
       //setTimeout(this.generateWinningStream, 50);
     },
     generateWinningStream: function(){
@@ -204,7 +199,8 @@ export default {
     prepareTheMove: function(){
 
       var array = this.winningStream;
-
+      //console.log('array');
+      //console.log(array);
       //check if it's first move for opponent
       if(this.helper==this.playsFirst && document.getElementsByClassName("X").length==1 && this.selected!=4 && this.playsFirst==true){
         //check if user played on diagonal fields and not the central element
@@ -225,48 +221,11 @@ export default {
       var moves = this.players[this.helper ? 1 : 0].moves;
       var objectKeys = Object.keys(array);
 
+      //check if there is a winning move for the script
+
       Array.prototype.diff = function(a) {
         return this.filter(function(i) {return a.indexOf(i) < 0;});
       };
-
-      //if user is playing first and either of diagonals is played within first three moves, do cross
-      if(this.playsFirst==true && this.selected==3 && this.safe==false){
-        var help = [];
-        var helpCross = [];
-        for(var g=0;g<Object.keys(this.helperWinningStream).length;g++){
-          //console.log(this.helperWinningStream[g]);
-          //console.log(g);
-          if(g>1 && this.helperWinningStream[g].includes(document.getElementsByClassName("O")[0]))
-          helpCross.push(this.helperWinningStream[g]);
-          innerloop:
-          for(var k=0;k<this.helperWinningStream[g].length;k++){
-            //console.log(this.helperWinningStream[g][k]);
-            if(this.helperWinningStream[g][k].classList.value==''){
-              help.push(g.toString());
-              break innerloop;
-            }
-          }
-        }
-        //console.log(help);
-        var diff = Object.keys(this.helperWinningStream).diff(help);
-
-        if(diff.length==1 && (parseInt(diff[0])==0 || parseInt(diff[0])==1)){
-          //console.log(helpCross);
-          //console.log(helpCross[0].indexOf(1));
-          helpCross[0].splice(1,1);
-          //console.log(helpCross[1].indexOf(1));
-          helpCross[1].splice(1,1);
-          //console.log(helpCross);
-          var rand = Math.round(Math.random()*1);
-          //console.log(rand);
-          //console.log(helpCross[rand]);
-          this.safe = true;
-          return helpCross[rand][rand];
-        }
-
-      }
-
-      //check if there is a winning move for the script
 
       for(var i = 0;i<Object.keys(this.helperWinningStream).length;i++){
 
@@ -276,11 +235,13 @@ export default {
           for(var g=0;g<this.helperWinningStream[i].length;g++){
               if(this.helperWinningStream[i][g].classList.value==''){
                 return this.helperWinningStream[i][g];
-                //console.log(this.helperWinningStream[i][g].classList.value);
+                console.log(this.helperWinningStream[i][g].classList.value);
               }
           }
         }
       }
+
+
 
       //var scriptWin = [];
 
@@ -379,7 +340,6 @@ export default {
             return element === first;
           })){
             alert('winner is '+ first);
-            this.stop = true;
             //this.clear();
           }
 
