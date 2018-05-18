@@ -82,7 +82,7 @@
       </div>
     </div>
 
-    <h3>Hobbies:</h3>
+    <h1>Hobbies:</h1>
     <hr>
       <ul v-for="(hobbie,index) in this.data.hobbies">
 
@@ -98,7 +98,7 @@
 
       </ul>
       <hr>
-      <h4>To Mindvalley</h4>
+      <h1>To Mindvalley</h1>
       <div>{{this.data.additional_to_mindvally.message}}</div>
       <!--/div-->
     </div>
