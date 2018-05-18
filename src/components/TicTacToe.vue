@@ -93,7 +93,6 @@ export default {
   },
   methods:{
     react: function(e){
-      //console.log(this.stop);
       if(this.stop==true)
       return false;
       //meaning field is already played
@@ -111,9 +110,6 @@ export default {
       this.checkWinner();
       if(this.helper==this.playsFirst)
       this.playMove();
-
-
-      //if there are no moves left call check
 
     },
     clear: function(){
@@ -234,32 +230,26 @@ export default {
         var help = [];
         var helpCross = [];
         for(var g=0;g<Object.keys(this.helperWinningStream).length;g++){
-          //console.log(this.helperWinningStream[g]);
-          //console.log(g);
           if(g>1 && this.helperWinningStream[g].includes(document.getElementsByClassName("O")[0]))
           helpCross.push(this.helperWinningStream[g]);
           innerloop:
           for(var k=0;k<this.helperWinningStream[g].length;k++){
-            //console.log(this.helperWinningStream[g][k]);
             if(this.helperWinningStream[g][k].classList.value==''){
               help.push(g.toString());
               break innerloop;
             }
           }
         }
-        //console.log(help);
         var diff = Object.keys(this.helperWinningStream).diff(help);
 
         if(diff.length==1 && (parseInt(diff[0])==0 || parseInt(diff[0])==1)){
-          //console.log(helpCross);
-          //console.log(helpCross[0].indexOf(1));
+
           helpCross[0].splice(1,1);
-          //console.log(helpCross[1].indexOf(1));
+
           helpCross[1].splice(1,1);
-          //console.log(helpCross);
+
           var rand = Math.round(Math.random()*1);
-          //console.log(rand);
-          //console.log(helpCross[rand]);
+
           this.safe = true;
           return helpCross[rand][rand];
         }
@@ -272,17 +262,15 @@ export default {
 
         if(typeof this.helperWinningStream[i] != 'undefined')
         if(this.helperWinningStream[i].diff(moves).length==1){
-          //console.log(this.helperWinningStream[i]);
+
           for(var g=0;g<this.helperWinningStream[i].length;g++){
               if(this.helperWinningStream[i][g].classList.value==''){
                 return this.helperWinningStream[i][g];
-                //console.log(this.helperWinningStream[i][g].classList.value);
+
               }
           }
         }
       }
-
-      //var scriptWin = [];
 
       for(var i=0;i<moves.length;i++){
         if(Object.keys(array).length)
@@ -290,7 +278,6 @@ export default {
           //searching only for the possible winning combinations, meaning where only opponent's moves are present
           if (typeof array[objectKeys[e]] != 'undefined'){
             if(array[objectKeys[e]].includes(moves[i])){
-              //scriptWin.push(array[objectKeys[e]]);
               delete array[objectKeys[e]];
             }
           }
@@ -321,11 +308,11 @@ export default {
 
         if(typeof this.helperWinningStream[i] != 'undefined')
         if(this.helperWinningStream[i].diff(movesOpponent).length==1){
-          //console.log(this.helperWinningStream[i]);
+
           for(var g=0;g<this.helperWinningStream[i].length;g++){
               if(this.helperWinningStream[i][g].classList.value==''){
                 return this.helperWinningStream[i][g];
-                //console.log(this.helperWinningStream[i][g].classList.value);
+
               }
           }
         }
@@ -339,13 +326,10 @@ export default {
       for (var key in array) {
         sortable.push(array[key]);
       }
-      //console.log(sortable);
+
       sortable.sort(function(a, b) {
         return a.length - b.length;
       });
-
-      //console.log(sortable);
-
 
       //check if all elements are the same, then play random
       var length = sortable.length;
@@ -362,7 +346,6 @@ export default {
       }
       //return random element
       return sortable[Math.floor(Math.random()*length)][Math.floor(Math.random()*sortable[0].length)]
-      //console.log(sortable);
     },
     checkWinner: function(){
 
@@ -380,7 +363,6 @@ export default {
           })){
             alert('winner is '+ first);
             this.stop = true;
-            //this.clear();
           }
 
         }

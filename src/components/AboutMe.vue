@@ -28,8 +28,8 @@
     <div id="skills">
 
       <ul v-for="(skill,index) in this.data.skills">
-        <li >{{skill.skill}}</li><!--v-if="index == skill.length - 1"-->
-        <!--div v-else>{{skill}}<br></div-->
+        <li >{{skill.skill}}</li>
+
       </ul>
     </div>
     <h1>Employment History</h1>
@@ -60,7 +60,7 @@
       <hr>
       <div v-for="(education,index) in this.data.education.formal">
 
-          <!--div v-for="(edTypeFormal,indexA) in edTypeFormalA"-->
+
             <div><h5>Institution:</h5>{{education.institution}}</div>
             <div><h5>Period:</h5>{{education.period}}</div>
             <div><h5>Title:</h5>{{education.title}}</div>
@@ -72,28 +72,24 @@
       <hr>
         <div v-for="(education,index) in this.data.education.infomal">
 
-          <!--div v-for="(edTypeInformal,indexA) in edTypeInformal"-->
+
           <div><h5>Institution:</h5>{{education.institution}}</div>
           <div><h5>Period:</h5>{{education.period}}</div>
           <div><h5>Title:</h5>{{education.title}}</div>
           <div><h5>About:</h5>{{education.about}}</div>
           <hr>
-        <!--/div-->
+
       </div>
     </div>
 
     <h1>Hobbies:</h1>
     <hr>
       <ul v-for="(hobbie,index) in this.data.hobbies">
-
-        <!--div v-for="(edTypeInformal,indexA) in edTypeInformal"-->
         <li>{{hobbie.hobby}}</li>
 
       </ul>
       <hr>
       <ul v-for="(link,index) in this.data.useful_links">
-
-        <!--div v-for="(edTypeInformal,indexA) in edTypeInformal"-->
         <h5>{{link.name}}:</h5><li><a :href=link.link target="_blank">{{link.link}}</a></li>
 
       </ul>
