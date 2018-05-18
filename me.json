@@ -1,0 +1,151 @@
+{
+   "main_data":{
+       "name":"Ognjen Babic",
+       "title":"Web Developer",
+       "address":{
+           "street_address":"Majora Drage Bajalovica 12",
+           "city":"Banja Luka",
+           "zip_code":"78000",
+           "region":"Republika Srpska",
+           "country":"Bosnia And Herzegovina"
+       },
+       "picture":"https://image.ibb.co/j1x8RJ/moja_slika.jpg",
+       "email_address":"obabicbl@gmail.com",
+       "phone_number":"+38766/325-142",
+       "date_of_birth":"20/03/1995",
+       "place_of_birth":"Banja Luka"
+   },
+   "skills":{
+     "0":{
+        "skill":"PHP"
+     },"1":{
+        "skill":"MySQL"
+     },"2":{
+        "skill":"Laravel"
+     },"3":{
+        "skill":"Vue.js"
+     },"4":{
+        "skill":"HTML"
+     },"5":{
+        "skill":"CSS"
+     },"6":{
+        "skill":"Joomla"
+     },"7":{
+        "skill":"Wordpress"
+     },"8":{
+        "skill":"Drupal"
+     },"9":{
+        "skill":"jQuery"
+     },"10":{
+        "skill":"Git"
+     },"11":{
+        "skill":"Docker"
+     }
+   },
+   "employment_history":{
+       "0":{
+       "employment_type":"Internship",
+       "employer_name":"Infomedia D.O.O",
+       "period":"December 2015 – June 2016",
+       "title":"PHP Developer Intern",
+       "location":"Banja Luka, Bosnia And Herzegovina",
+       "duties":{
+         "0":"Getting familiar with development stack.",
+         "1":"Building small applications to handle simple tasks.",
+         "2":"Learning version control software(Git)"
+       },
+       "about":"It was the first time I was introduced to web development world. I leared PHP and MySql that I used to develop applications back then."
+     },
+     "1":{
+       "employment_type":"Fulltime employee",
+       "employer_name":"Infomedia D.O.O",
+       "period":"June 2016- July 2017",
+       "title":"Junior PHP Developer",
+       "location":"Banja Luka, Bosnia And Herzegovina",
+       "duties":{
+         "0":"Developing specific applications to meet marketing needs.(Facebook notifications sending application)",
+         "1":"Building and maintaining big internal systems.",
+         "2":"Creating reports for already exising system.",
+         "3":"Optimizing MySQL queries."
+       },
+       "about":"That's when things started to become serious. I was meeting and exceeding projects scopes trying to develop the most optimized solutions to given tasks."
+     },
+     "2":{
+       "empoyment_type":"Fulltime employee",
+       "employer_name":"OGOSense D.O.O",
+       "period":"August 2017 – Present",
+       "title":"PHP Developer",
+       "location":"Banja Luka, Bosnia And Herzegovina",
+       "duties":{
+         "0":"Developing specific applications to meet marketing needs for external clients.",
+         "1":"Building big internal system using microservices approach.",
+         "2":"Getting familiar with the most popular CMS's like Joomla, Drupal and Wordpress.",
+         "3":"Creating components and plugins to suite specific tasks.",
+         "4":"Meeting milestones."
+       },
+       "about":"On my current daytime job I'm developing Joomla CMS based applications as well as Laravel-Wordpress based application. Beside that, I'm using Lumen to develop microservices for internal use."
+     }
+   },
+   "education":{
+     "formal":{
+       "0":{
+         "institution":"JU Gimnazija Banja Luka",
+         "period":"October 2010 – June 2014",
+         "title":"High School Graduate",
+         "about":"The high school that I graduated in is on of the best in the country of Bosnia and Herzegovina. It's study plan covers major social and natural sciences, outputing ready-for-further specialization graduates."
+       },"1":{
+         "institution":"Faculty of Electrical Engineering, Banja Luka",
+         "period":"September 2016 – Present",
+         "title":"Once I graduate - Bachelor of Computing and Informatics",
+         "about":"I'm a student of one of the best universities for software development in my country. I'm the first-year student that works beside studying. This is a faculty with strong math orientation."
+       },"2":{
+         "institution":"Infoars Academy",
+         "period":"March 2015 - October 2015",
+         "title":"Certified PHP Developer",
+         "about":"I attended three levels of courses provided and thought by specialists at Infoars Academy in my hometown. There I learnt from senior programes about programming in PHP and MySQL, which made me ready to jump into real world projects and internship."
+       },"3":{
+         "institution":"Volan Driving School",
+         "period":"August 2017 - November 2017",
+         "title":"B Category Driver",
+         "about":"I finished driving school and passed driving exam from the first time. Yaay!."
+       },"4":{
+         "institution":"Centar for development and progress",
+         "period":"August 2016 - October 2017",
+         "title":"B1 German Language Graduate",
+         "about":"I attended 3 levels of courses on German language. I still like it a lot, but don't have time to enjoy in it."
+       }
+     },
+     "infomal":{
+       "0":{
+         "institution":"NLP Centar, Belgrade",
+         "period":"April 2018-April 2018",
+         "title":"Certified Tibetian Reiki Therapist",
+         "about":"I attended two levels of courses in Reiki healing provided and thought by specialists at NLP Centar in Belgrade. There I learnt and improved my energy healing skills which I now use to help others and myself as well."
+       },"1":{
+         "institution":"Kung Fu Wushu Club - Lotus",
+         "period":"March 2014 - October 2017",
+         "title":"First level Wing-Chun Student",
+         "about":"I trained Wing-Chun system of Chinese fighting for couple of years."
+       }
+     },
+     "hobbies":{
+       "0":{
+         "hobby":"Running"
+       },"1":{
+         "hobby":"Guitar playing"
+       },"2":{
+         "hobby":"Calisthenics"
+       }
+     },
+     "useful_links":{
+       "0":{"name":"LinkedIn","link":"https://www.linkedin.com/in/ognjen-babic-06363311a/"},
+       "1":{"name":"StackOverflow","link":"https://stackoverflow.com/users/5825182/ognj3n"},
+       "2":{"name":"Github","link":"https://github.com/Ognj3n"}
+     },
+     "additional_to_mindvally":{
+       "message":"Huuh! First things first, You guys really made me sweat with these test tasks. :) Beside that, I would like to thank you for this opportunity. I really like everything that you do and your products. Hope I'll hear from you again."
+     }
+   }
+}
+
+"url":https://api.myjson.com/bins/14pmi2
