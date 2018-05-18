@@ -86,14 +86,14 @@ export default {
       winningStream:{},
       numOfWinningCombinations:0,
       playsFirst:null,
-      movesLeft: 9
+      movesLeft: 9,
+      helperWinningStream: {}
     }
   },
   methods:{
     react: function(e){
-      console.log(this.movesLeft);
-      if(this.movesLeft==1)
-      return alert('end');
+
+
       //meaning field is already played
       if(this.players[0].moves.includes(e.target) || this.players[1].moves.includes(e.target))
       return false;
@@ -104,10 +104,12 @@ export default {
       target.className = this.players[player].playerType;
 
       this.movesLeft--;
+      this.checkWinner();
       if(this.helper==this.playsFirst)
       this.playMove();
 
-      //this.checkWinner();
+
+      //if there are no moves left call check
 
     },
     clear: function(){
@@ -134,11 +136,13 @@ export default {
       }
         for(var t = 0; t<this.numOfWinningCombinations;t++){
         this.winningStream[t]=[];
+        this.helperWinningStream[t]=[];
         switch(true){
           case (t == 0):
 
           for(var k = 0; k<this.selected;k++){
             this.winningStream[t][k]=document.getElementsByTagName('tr')[k].childNodes[k];
+            this.helperWinningStream[t][k]=document.getElementsByTagName('tr')[k].childNodes[k];
           }
           break;
           case (t == 1):
@@ -147,6 +151,7 @@ export default {
           for(var k = 0; k<this.selected;k++){
             while(j>=0){
               this.winningStream[t][k]=document.getElementsByTagName('tr')[k].childNodes[j];
+              this.helperWinningStream[t][k]=document.getElementsByTagName('tr')[k].childNodes[j];
               j--;
               continue loop;
             }
@@ -155,6 +160,7 @@ export default {
           case (t <= (this.selected+1)):
           for(var k = 0; k<this.selected;k++){
               this.winningStream[t][k]=document.getElementsByTagName('tr')[t-2].childNodes[k];
+              this.helperWinningStream[t][k]=document.getElementsByTagName('tr')[t-2].childNodes[k];
           }
           break;
           default:
@@ -163,6 +169,7 @@ export default {
           for (var row = 0; row < this.selected; ++row) {
           if (table.rows[row].cells.length > cnt) {
               this.winningStream[t].push(table.rows[row].cells[cnt]);
+              this.helperWinningStream[t].push(table.rows[row].cells[cnt]);
             }
           }
           cnt++;
@@ -182,32 +189,86 @@ export default {
     },
     playMove: function(){
       var el = this.prepareTheMove();
+
+      if(typeof el=='object' && Object.keys(el).length==1){
+        el[0].click();
+      }
+
       el.click();
     },
     prepareTheMove: function(){
+
       var array = this.winningStream;
+      //console.log('array');
+      //console.log(array);
+      //check if it's first move for opponent
+      if(this.helper==this.playsFirst && document.getElementsByClassName("X").length==1 && this.selected!=4 && this.playsFirst==true){
+        //check if user played on diagonal fields and not the central element
+        if((array[0].includes(document.getElementsByClassName("X")[0]) || array[1].includes(document.getElementsByClassName("X")[0])) && (!(array[0].includes(document.getElementsByClassName("X")[0]) && array[1].includes(document.getElementsByClassName("X")[0]))))
+        {
+          return array[0].filter(function(n) {
+            return array[1].indexOf(n) > -1;
+          })[0];
+      }else if((array[0].includes(document.getElementsByClassName("X")[0]) && array[1].includes(document.getElementsByClassName("X")[0]))){
+
+         var first = Math.floor(Math.random()*2);
+         var second = array[first].splice(Math.round(this.selected/2)-1,1);
+         return array[first][Math.round(Math.random()*(array[first].length-1))];
+         //return array[first][0];
+      }
+      }
+
       var moves = this.players[this.helper ? 1 : 0].moves;
       var objectKeys = Object.keys(array);
-      for(var i=0;i<moves.length;i++){
-        if(Object.keys(array).length)
-        for(var e=0;e<=objectKeys.length;e++){
-          //searching only for the possible winning combinations, meaning where only opponent's moves are present
-          if (typeof array[objectKeys[e]] != 'undefined')
-          if(array[objectKeys[e]].includes(moves[i])){
-            delete array[objectKeys[e]];
+
+      //check if there is a winning move for the script
+
+      Array.prototype.diff = function(a) {
+        return this.filter(function(i) {return a.indexOf(i) < 0;});
+      };
+
+      for(var i = 0;i<Object.keys(this.helperWinningStream).length;i++){
+
+        if(typeof this.helperWinningStream[i] != 'undefined')
+        if(this.helperWinningStream[i].diff(moves).length==1){
+          //console.log(this.helperWinningStream[i]);
+          for(var g=0;g<this.helperWinningStream[i].length;g++){
+              if(this.helperWinningStream[i][g].classList.value==''){
+                return this.helperWinningStream[i][g];
+                console.log(this.helperWinningStream[i][g].classList.value);
+              }
           }
         }
       }
 
+
+
+      //var scriptWin = [];
+
+      for(var i=0;i<moves.length;i++){
+        if(Object.keys(array).length)
+        for(var e=0;e<=objectKeys.length;e++){
+          //searching only for the possible winning combinations, meaning where only opponent's moves are present
+          if (typeof array[objectKeys[e]] != 'undefined'){
+            if(array[objectKeys[e]].includes(moves[i])){
+              //scriptWin.push(array[objectKeys[e]]);
+              delete array[objectKeys[e]];
+            }
+          }
+        }
+      }
+
+
       var movesOpponent = this.players[!this.helper ? 1 : 0].moves;
+
       for(var i=0;i<movesOpponent.length;i++){
         //check if there are any opponent moves
         if(Object.keys(array).length){
-          for(var e=0;e<=Object.keys(array).reduce((a, b) => array[a] > array[b] ? a : b);e++){
+          for(var e=0;e<=objectKeys.length;e++){
             //searching only for the possible winning combinations, meaning where only opponent's moves are present
-            if (typeof array[e] != 'undefined')
-            if(array[e].includes(movesOpponent[i])){
-              array[e].splice(array[e].indexOf(movesOpponent[i]),1);
+            if (typeof array[objectKeys[e]] != 'undefined')
+            if(array[objectKeys[e]].includes(movesOpponent[i])){
+              array[objectKeys[e]].splice(array[objectKeys[e]].indexOf(movesOpponent[i]),1);
             }
           }
         }else{
@@ -216,16 +277,37 @@ export default {
         }
       }
 
+
+      for(var i = 0;i<Object.keys(this.helperWinningStream).length;i++){
+
+        if(typeof this.helperWinningStream[i] != 'undefined')
+        if(this.helperWinningStream[i].diff(movesOpponent).length==1){
+          //console.log(this.helperWinningStream[i]);
+          for(var g=0;g<this.helperWinningStream[i].length;g++){
+              if(this.helperWinningStream[i][g].classList.value==''){
+                return this.helperWinningStream[i][g];
+                //console.log(this.helperWinningStream[i][g].classList.value);
+              }
+          }
+        }
+      }
+
+
+
       objectKeys = Object.keys(array);
 
       var sortable = [];
       for (var key in array) {
         sortable.push(array[key]);
       }
-
+      //console.log(sortable);
       sortable.sort(function(a, b) {
         return a.length - b.length;
       });
+
+      //console.log(sortable);
+
+
       //check if all elements are the same, then play random
       var length = sortable.length;
       var check = sortable[0].length;
@@ -244,16 +326,25 @@ export default {
       //console.log(sortable);
     },
     checkWinner: function(){
-      loop:
-      for(var i=0;i<2;i++){
-        for(var e=0;e<this.numOfWinningCombinations;e++){
-          if(this.players[i].moves.sort().join(',') === this.winningStream[e].sort().join(',')){
-            alert('winner is '+ this.players[i].playerType);
-            break loop;
-            this.clear();
+
+        for(var e=0;e<Object.keys(this.helperWinningStream).length;e++){
+          var holdMoves = [];
+          var lengthO = this.helperWinningStream[e].length;
+          for(var g=0;g<lengthO;g++){
+            holdMoves.push(this.helperWinningStream[e][g].classList.value);
           }
+          var first = holdMoves[0];
+          if(holdMoves.every(function(element) {
+            if(element=='' || element==null || element=='undefined')
+            return false;
+            return element === first;
+          })){
+            alert('winner is '+ first);
+            //this.clear();
+          }
+
         }
-      }
+
     }
   }
 }
